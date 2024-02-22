@@ -1,0 +1,10 @@
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\bin\Debug\ScrapUrl.exe.config
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\bin\Debug\ScrapUrl.exe
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\bin\Debug\ScrapUrl.pdb
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\bin\Debug\Newtonsoft.Json.dll
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\bin\Debug\Newtonsoft.Json.xml
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\obj\Debug\ScrapUrl.csproj.AssemblyReference.cache
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\obj\Debug\ScrapUrl.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\obj\Debug\ScrapUrl.csproj.CopyComplete
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\obj\Debug\ScrapUrl.exe
+C:\Users\DELL\source\repos\ScrapUrl\ScrapUrl\obj\Debug\ScrapUrl.pdb
