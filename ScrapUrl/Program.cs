@@ -9,6 +9,7 @@ using System.Xml.Linq;
 class Program
 {
     static int count = 1;
+    static int urlCount = 1;
 
     static void Main()
     {
@@ -33,7 +34,7 @@ class Program
         }
 
 
-        Console.WriteLine("Processing completed. Press Enter to exit.");
+        Console.WriteLine($"Processing completed. total Url printed = {urlCount}");
         Console.ReadLine();
     }
 
@@ -57,6 +58,7 @@ class Program
 
             SaveUrlsToFile(notepadFilePath, urls);
 
+            urlCount = urlCount + urls.Count;
             Console.WriteLine($"Count: {count}\t Processed folder: {folderName}\t Processed file: {fileName}\t {urls.Count} URLs extracted.");
             count++;
         }
