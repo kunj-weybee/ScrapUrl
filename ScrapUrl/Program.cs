@@ -28,7 +28,7 @@ class Program
 
             foreach (string jsonFilePath in jsonFiles)
             {
-                ProcessJsonFile(jsonFilePath, notepadFilePath, subFolder);
+                ProcessJsonFile(jsonFilePath, notepadFilePath);
             }
         }
 
@@ -37,7 +37,7 @@ class Program
         Console.ReadLine();
     }
 
-    static void ProcessJsonFile(string jsonFilePath, string notepadFilePath, string subFolder)
+    static void ProcessJsonFile(string jsonFilePath, string notepadFilePath)
     {
         string fileName = Path.GetFileName(jsonFilePath);
 
