@@ -13,30 +13,41 @@ class Program
     static void Main()
     {
         // path where the JSON files are located
-        string directoryPath = "C:\\Users\\DELL\\Downloads\\Source\\2024_02_07";
+        string sourceFolderPath = "C:\\Users\\DELL\\Downloads\\Source";
 
         // at this file data gets print into text document
-        string outputPath = "C:\\Users\\DELL\\Desktop\\URL_List.txt";
+        string notepadFilePath = "C:\\Users\\DELL\\Desktop\\URL_List.txt";
 
-        // json files no array store karva
-        string[] jsonFiles = Directory.GetFiles(directoryPath, "*.json");
+        // Get all subdirectories in the source folder
+        string[] subFolders = Directory.GetDirectories(sourceFolderPath);
 
-        foreach (string filePath in jsonFiles)
+        foreach (string subFolder in subFolders)
         {
-            ProcessJsonFile(filePath, outputPath);
+            // Get all JSON files in the current subFolder
+            string[] jsonFiles = Directory.GetFiles(subFolder, "*.json");
+
+            foreach (string jsonFilePath in jsonFiles)
+            {
+                ProcessJsonFile(jsonFilePath, notepadFilePath, subFolder);
+            }
         }
+
 
         Console.WriteLine("Processing completed. Press Enter to exit.");
         Console.ReadLine();
     }
 
-    static void ProcessJsonFile(string filePath, string outputPath)
+    static void ProcessJsonFile(string jsonFilePath, string notepadFilePath, string subFolder)
     {
-        string fileName = Path.GetFileName(filePath);
+        string fileName = Path.GetFileName(jsonFilePath);
 
-        string jsonContent = File.ReadAllText(filePath);
+        string folderPath = Path.GetDirectoryName(jsonFilePath);
 
-        JObject jsonObject = JObject.Parse(jsonContent);
+        string folderName = Path.GetFileName(folderPath);
+
+        string jsonFileContent = File.ReadAllText(jsonFilePath);
+
+        JObject jsonObject = JObject.Parse(jsonFileContent);
 
         JArray subSectionsArray = jsonObject["SubSections"] as JArray;
 
@@ -44,15 +55,18 @@ class Program
         {
             var urls = ExtractUrlsFromSubSections(subSectionsArray).ToList();
 
-            SaveUrlsToFile(outputPath, urls);
+            SaveUrlsToFile(notepadFilePath, urls);
 
-            Console.WriteLine($"Processed file: {fileName}. {urls.Count} URLs extracted.");
+            Console.WriteLine($"Count: {count}\t Processed folder: {folderName}\t Processed file: {fileName}\t {urls.Count} URLs extracted.");
+            count++;
         }
         else
         {
             Console.WriteLine($"Invalid JSON structure in file: {fileName}. Check your JSON file format.");
         }
     }
+
+
 
     static IEnumerable<string> ExtractUrlsFromSubSections(JArray subSectionsArray)
     {
@@ -64,12 +78,12 @@ class Program
 
             if (dataLines != null)
             {
-                // Extract URLs from lines with RowsUpdated: 0
                 urls.AddRange(ExtractUrlsFromLinesWithRowsUpdatedZero(dataLines));
             }
 
-            // Recursively process nested SubSections . because there are nested objects in subsection .
+            // Recursively process nested SubSections
             var nestedSubSections = subSection["SubSections"] as JArray;
+
             if (nestedSubSections != null)
             {
                 urls.AddRange(ExtractUrlsFromSubSections(nestedSubSections));
@@ -87,7 +101,7 @@ class Program
         {
             if (line.ToString().Contains("RowsUpdated: 0"))
             {
-                // to match URLs
+
                 string pattern = @"https:\/\/[^\s]+";
                 Match match = Regex.Match(line.ToString(), pattern);
 
@@ -103,7 +117,6 @@ class Program
 
     static void SaveUrlsToFile(string outputPath, IEnumerable<string> urls)
     {
-        // Append to the existing file or create a new file if it doesn't exist
         using (StreamWriter writer = new StreamWriter(outputPath, true))
         {
             foreach (var url in urls)
